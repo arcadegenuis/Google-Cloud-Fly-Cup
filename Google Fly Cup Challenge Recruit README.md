@@ -1,7 +1,4 @@
-Here’s your cleaned and properly formatted Markdown version of the Google Fly Cup Challenge: Recruit guide with all your custom rules applied:
 
-
----
 
 # 🏁 Google Fly Cup Challenge: Recruit — Arcade Genius Edition
 
@@ -12,7 +9,7 @@ Here’s your cleaned and properly formatted Markdown version of the Google Fly 
 ## 🚀 Setup: Load the Dataset in Cloud Shell
 
 ```bash
-for file in `gsutil ls gs://spls/gsp394/tables/*.csv`; do TABLE_NAME=`echo $file | cut -d '/' -f6 | cut -d '.' -f1`; bq load --autodetect --source_format=CSV --replace=true drl.$TABLE_NAME $file; done
+for file in `gsutil ls gs://spls/gsp394/tables/*.csv`; do TABLE_NAME=`echo $file | cut -d '/' -f6 | cut -d '.' -f1`; bq load --autodetect --source_format=CSV --replace=true drl.$TABLE_NAME $file; done ##
 
 
 ---
