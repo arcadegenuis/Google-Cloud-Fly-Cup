@@ -1,5 +1,3 @@
-
-
 # 🏁 Google Fly Cup Challenge: Recruit — Arcade Genius Edition
 
 🔗 YouTube: [Arcade Genius YouTube Channel](https://www.youtube.com/@ArcadeGenius-z1)
@@ -9,35 +7,37 @@
 ## 🚀 Setup: Load the Dataset in Cloud Shell
 
 ```bash
-for file in `gsutil ls gs://spls/gsp394/tables/*.csv`; do TABLE_NAME=`echo $file | cut -d '/' -f6 | cut -d '.' -f1`; bq load --autodetect --source_format=CSV --replace=true drl.$TABLE_NAME $file; done ##
-
+for file in `gsutil ls gs://spls/gsp394/tables/*.csv`; do TABLE_NAME=`echo $file | cut -d '/' -f6 | cut -d '.' -f1`; bq load --autodetect --source_format=CSV --replace=true drl.$TABLE_NAME $file; done
+```
 
 ---
 
-## 🧩 Task 1: Query Events by City (Replace ENTER_YOUR_CITY_NAME)
+## 🧩 Task 1: Query Events by City
 
-```bash
+```sql
 SELECT name 
 FROM `drl.events` 
 WHERE city = 'ENTER_YOUR_CITY_NAME'
-
+```
 
 ---
 
-🧩 Task 2: Join Pilots with Event Pilots
+## 🧩 Task 2: Join Pilots with Event Pilots
 
+```sql
 SELECT 
   `drl.pilots`.name, 
   `drl.event_pilots`.id 
 FROM `drl.event_pilots` 
 LEFT JOIN `drl.pilots` 
 ON `drl.pilots`.id = `drl.event_pilots`.pilot_id
-
+```
 
 ---
 
-🧩 Task 3: Get Pilots by Event (Replace ENTER_YOUR_EVENT_NAME)
+## 🧩 Task 3: Get Pilots by Event
 
+```sql
 SELECT 
   `drl.pilots`.name, 
   `drl.events`.name AS event_name 
@@ -47,12 +47,13 @@ ON `drl.pilots`.id = `drl.event_pilots`.pilot_id
 LEFT OUTER JOIN `drl.events` 
 ON `drl.events`.id = `drl.event_pilots`.event_id 
 WHERE `drl.events`.name = 'ENTER_YOUR_EVENT_NAME'
-
+```
 
 ---
 
-🧩 Task 4: Average of 1st Rank Round Minimum Time
+## 🧩 Task 4: Average of 1st Rank Round Minimum Time
 
+```sql
 WITH cte AS (
   SELECT `drl.round_standings`.minimum_time 
   FROM `drl.round_standings` 
@@ -71,12 +72,13 @@ SELECT TIME(
   )
 ) AS avg 
 FROM cte
-
+```
 
 ---
 
-🧩 Task 5: Create Table drl.time_trial_cleaned
+## 🧩 Task 5: Create Table `drl.time_trial_cleaned`
 
+```sql
 CREATE TABLE drl.time_trial_cleaned AS (
   SELECT
     `drl.time_trial_group_pilot_times`.id AS time_trial_group_pilot_times_id,
@@ -94,12 +96,13 @@ CREATE TABLE drl.time_trial_cleaned AS (
   LEFT OUTER JOIN `drl.time_trial_groups` 
     ON `drl.time_trial_group_pilots`.time_trial_group_id = `drl.time_trial_groups`.id
 )
-
+```
 
 ---
 
-🧩 Task 6: Fastest Time for a Specific Event (Replace ENTER_YOUR_EVENT_NAME)
+## 🧩 Task 6: Fastest Time for a Specific Event
 
+```sql
 WITH cte AS (
   SELECT
     `drl.rounds`.event_id,
@@ -116,12 +119,13 @@ WITH cte AS (
 SELECT MIN(time) AS fastest_time 
 FROM cte 
 WHERE event_name = 'ENTER_YOUR_EVENT_NAME' AND name = 'Time Trials'
-
+```
 
 ---
 
-🧩 Task 7: Pilot Stats in Heat (Replace ENTER_NAME)
+## 🧩 Task 7: Pilot Stats in Heat
 
+```sql
 SELECT
   `drl.pilots`.name AS pilot_name,
   `drl.heat_standings`.heat_id AS heat_id,
@@ -135,12 +139,13 @@ LEFT JOIN `drl.pilots`
 WHERE name = 'ENTER_NAME'
   AND minimum_time != 'NURK'
   AND minimum_time != ''
-
+```
 
 ---
 
-🧩 Task 8: Running Average per Heat (Replace ENTER_NAME)
+## 🧩 Task 8: Running Average per Heat
 
+```sql
 WITH cte AS (
   SELECT 
     `drl.pilots`.name, 
@@ -174,12 +179,13 @@ SELECT
     )
   ) AS running_avg
 FROM cte
-
+```
 
 ---
 
-🧩 Task 9: Compare Time with Running Average (Replace ENTER_NAME)
+## 🧩 Task 9: Compare Time with Running Average
 
+```sql
 WITH cte AS (
   SELECT 
     `drl.pilots`.name, 
@@ -223,16 +229,11 @@ SELECT *,
     SECOND
   ) AS time_diff_from_avg 
 FROM cte2
-
+```
 
 ---
 
-🎉 Congrats on Finishing the Lab!
+## ✅ Completion
 
-If this helped, consider subscribing to the official Arcade Genius YouTube Channel 🚀
+If this helped, consider subscribing to the official [Arcade Genius YouTube Channel](https://www.youtube.com/@ArcadeGenius-z1) 🚀  
 Happy Learning!
-
----
-
-Let me know when you're ready with the next one!
-
