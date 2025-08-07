@@ -17,7 +17,7 @@ for file in `gsutil ls gs://spls/gsp394/tables/*.csv`; do TABLE_NAME=`echo $file
 
 ---
 
-🧩 Task 1: Query Events by City (Replace ENTER_YOUR_CITY_NAME)
+## 🧩 Task 1: Query Events by City (Replace ENTER_YOUR_CITY_NAME)
 
 SELECT name 
 FROM `drl.events` 
